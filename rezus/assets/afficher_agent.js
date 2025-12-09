@@ -6,7 +6,7 @@
   async function fetchAgents() {
     try {
       const token = localStorage.getItem('jwt');
-      const res = await fetch('http://192.168.1.23:3000/api/users', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+      const res = await fetch('http://192.168.1.27:3000/api/users', { headers: token ? { Authorization: `Bearer ${token}` } : {} });
       if (!res.ok) throw new Error('Erreur ' + res.status);
       agents = await res.json();
       renderTable(agents);
@@ -34,9 +34,9 @@
         <td>${escapeHtml(u.email || '—')}</td>
         <td>${escapeHtml(u.role || '—')}</td>
         <td style="text-align:right">
-          <button class="action-btn btn-view" data-action="view">VoirE</button>
+          <button class="action-btn btn-view" data-action="view">Voire</button>
           <button class="action-btn btn-edit" data-action="edit">Modifier</button>
-          <button class="action-btn btn-delete" data-action="delete">Sppr</button>
+          <button class="action-btn btn-delete" data-action="delete">Suppr</button>
         </td>
       </tr>
     `).join('');
