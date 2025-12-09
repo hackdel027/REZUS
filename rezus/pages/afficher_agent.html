@@ -1,0 +1,82 @@
+<!-- Liste des agents -->
+<section class="agents-card card">
+  <div class="agents-header">
+    <h1>Liste des agents</h1>
+    <div class="agents-controls">
+      <input id="agentSearch" type="search" placeholder="Rechercher par pseudo, nom ou email..." />
+      <button id="btnRefreshAgents" class="btn-secondary">Rafraîchir</button>
+    </div>
+  </div>
+
+  <div class="agent-table-container">
+    <table id="agentsTable" class="agents-table" aria-live="polite">
+      <thead>
+        <tr>
+          <th>Pseudo</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rôle</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- lignes générées dynamiquement -->
+      </tbody>
+    </table>
+
+    <div id="agentsEmpty" class="hint" style="display:none">Aucun agent trouvé.</div>
+  </div>
+</section>
+
+<!-- Modal details -->
+<div id="agentModal" class="modal" style="display:none">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="agentModalTitle">Détails agent</h2>
+      <button class="btn-close" id="closeAgentModal">✕</button>
+    </div>
+    <div class="modal-body" id="agentModalBody">
+      <!-- contenu créé dynamiquement -->
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="modalCloseBtn">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* styles page afficher_agent */
+.agents-card { max-width:1100px; margin:18px auto; font-family:Inter,Arial,Helvetica; }
+.card { background:#fff; border-radius:12px; padding:18px; box-shadow:0 8px 30px rgba(12,20,40,0.06); }
+.agents-header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:12px; flex-wrap:wrap; }
+.agents-header h1 { margin:0; font-size:18px; }
+.agents-controls { display:flex; gap:8px; align-items:center; }
+#agentSearch { padding:8px 10px; border-radius:8px; border:1px solid #e6e9ef; min-width:260px; }
+.btn-secondary { background:#eef2f7; padding:8px 10px; border-radius:8px; border:none; cursor:pointer; }
+
+.agent-table-container { overflow:auto; border-radius:8px; border:1px solid #eef2f7; padding:6px; background:#fafcff; }
+.agents-table { width:100%; border-collapse:collapse; min-width:720px; }
+.agents-table thead th { text-align:left; padding:10px; font-size:13px; color:#6b7280; text-transform:uppercase; letter-spacing:0.6px; }
+.agents-table tbody td { padding:12px 10px; border-top:1px solid #f1f5f9; vertical-align:middle; font-size:14px; color:#0f1724; }
+.agents-table tbody tr:hover { background:linear-gradient(90deg,#fff,#fbfdff); transform:translateY(0); }
+.col-actions { width:160px; text-align:right; }
+
+.action-btn { padding:6px 10px; border-radius:8px; border:none; font-weight:600; cursor:pointer; margin-left:8px; }
+.btn-view { background:linear-gradient(180deg,#2b8aef,#1f6fd6); color:#fff; }
+.btn-delete { background:linear-gradient(180deg,#ef4444,#dc2626); color:#fff; }
+
+/* modal */
+.modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(2,6,23,0.45); z-index:1100; padding:18px; }
+.modal-content { width:100%; max-width:720px; background:#fff; border-radius:12px; box-shadow:0 12px 40px rgba(2,6,23,0.12); overflow:hidden; }
+.modal-header { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border-bottom:1px solid #eef2f7; }
+.modal-header h2 { margin:0; font-size:16px; }
+.btn-close { background:none; border:none; font-size:18px; cursor:pointer; }
+.modal-body { padding:14px 16px; max-height:60vh; overflow:auto; }
+.modal-footer { padding:12px 16px; border-top:1px solid #eef2f7; display:flex; justify-content:flex-end; gap:8px; }
+
+/* responsive */
+@media (max-width:900px) {
+  .agents-table { min-width:600px; }
+  .col-actions { width:120px; }
+}
+</style>

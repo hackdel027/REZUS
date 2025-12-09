@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>REZUS C24</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="assets/logo.jpeg" alt="OPTIRH Logo" class="logo-img">
+        </div>
+        <h2 class="logo">REZUS C24</h2>
+        <div class="menu-item">
+            <div class="menu-title" onclick="loadPage('dashboard')">Tableau de bord</div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-title" onclick="toggleMenu('menu1')">Gestion des agents</div>
+            <div id="menu1" class="submenu">
+                <div class="submenu-item" onclick="loadPage('add_agent')">Ajouter un agent</div>
+                <div class="submenu-item" onclick="loadPage('user_stats')">Afficher les stats</div>
+                <div class="submenu-item" onclick="loadPage('afficher_agent')">Afficher les agents</div>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-title" onclick="toggleMenu('menu2')">Gestion des permanences</div>
+            <div id="menu2" class="submenu">
+                <div class="submenu-item" onclick="loadPage('plan_perm')">Planifier une permanence</div>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-title" onclick="toggleMenu('menu3')">Gestion de la SPA</div>
+            <div id="menu3" class="submenu">
+                <div class="submenu-item" onclick="loadPage('add_spa')">Faire la SPA</div>
+                <div class="submenu-item" onclick="loadPage('afficher_spa')">Afficher la SPA</div>
+            </div>
+        </div>
+        <div class="menu-item">
+            <div class="menu-title" onclick="toggleMenu('menu4')">Gestion des logs</div>
+            <div id="menu4" class="submenu">
+                <div class="submenu-item" onclick="loadPage('logs')">Afficher les logs</div>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">Déconnexion</button>
+        </div>
+        <div class="user-info">
+            <p>Connecté en tant que : <strong id="user-pseudo">...</strong></p>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT (ajouté) -->
+    <div class="content" id="content">
+        <h1>Bienvenue dans OPTIRH DE LA CELLULE 24</h1>
+        <p>Sélectionnez une fonctionnalité dans le menu.</p>
+    </div>
+
+</div>
+<script src="assets/verify.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/add_agent.js"></script>
+<script src="assets/spa.js"></script>
+<script src="assets/afficher_spa.js"></script>
+<script src="assets/plan_perm.js"></script>
+<script src="assets/dashboard.js"></script>
+<script src="assets/user_stats.js"></script>
+<script src="assets/afficher_agent.js"></script>
+<script src="assets/logs.js"></script>
+
+<!-- charger la page dashboard par défaut -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof loadPage === 'function') loadPage('dashboard');
+  });
+</script>
+</body>
+</html>

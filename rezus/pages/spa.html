@@ -1,0 +1,265 @@
+<div class="spa-container">
+    <div class="spa-header">
+        <h1>Section de Présence et Absence (SPA)</h1>
+        <div class="date-display" id="currentDate"></div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card total">
+            <div class="stat-icon">👥</div>
+            <div class="stat-info">
+                <h3>Total</h3>
+                <p class="stat-number" id="nbreTotal">0</p>
+            </div>
+        </div>
+
+        <div class="stat-card present">
+            <div class="stat-icon">✓</div>
+            <div class="stat-info">
+                <h3>Présents</h3>
+                <p class="stat-number" id="nbrePresent">0</p>
+            </div>
+        </div>
+
+        <div class="stat-card absent">
+            <div class="stat-icon">✗</div>
+            <div class="stat-info">
+                <h3>Absents</h3>
+                <p class="stat-number" id="nbreAbsent">0</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-section">
+        <!-- Section Absents -->
+        <div class="detail-card">
+            <h2 class="section-title absent-title">
+                <span class="icon">✗</span> Absents
+            </h2>
+            <div class="list-container" id="absentsList">
+                <p class="empty-message">Aucun absent</p>
+            </div>
+        </div>
+
+        <!-- Section Retardataires -->
+        <div class="detail-card">
+            <h2 class="section-title retard-title">
+                <span class="icon">⏰</span> Retardataires
+            </h2>
+            <div class="list-container" id="retardatairesList">
+                <p class="empty-message">Aucun retardataire</p>
+            </div>
+        </div>
+
+        <!-- Section Permissionnaires -->
+        <div class="detail-card">
+            <h2 class="section-title permission-title">
+                <span class="icon">📝</span> Permissionnaires
+            </h2>
+            <div class="list-container" id="permissionnairesList">
+                <p class="empty-message">Aucun permissionnaire</p>
+            </div>
+        </div>
+
+        <!-- Section Présents -->
+        <div class="detail-card">
+            <h2 class="section-title present-title">
+                <span class="icon">✓</span> Présents
+            </h2>
+            <div class="list-container" id="presentsList">
+                <p class="empty-message">Aucune donnée</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .spa-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        padding-bottom: 80px;
+    }
+
+    .spa-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .spa-header h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .date-display {
+        font-size: 1.2em;
+        opacity: 0.9;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        transition: transform 0.3s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .stat-icon {
+        font-size: 2.5em;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+    }
+
+    .stat-card.total .stat-icon {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .stat-card.present .stat-icon {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    .stat-card.absent .stat-icon {
+        background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+    }
+
+    .stat-info h3 {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+
+    .stat-number {
+        font-size: 2em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .details-section {
+        display: grid;
+        gap: 20px;
+    }
+
+    .detail-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+        font-size: 1.3em;
+    }
+
+    .section-title .icon {
+        font-size: 1.2em;
+    }
+
+    .absent-title {
+        color: #ee0979;
+    }
+
+    .retard-title {
+        color: #f39c12;
+    }
+
+    .permission-title {
+        color: #3498db;
+    }
+
+    .present-title {
+        color: #11998e;
+    }
+
+    .list-container {
+        display: grid;
+        gap: 10px;
+    }
+
+    .list-item {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.3s;
+    }
+
+    .list-item:hover {
+        background: #e9ecef;
+    }
+
+    .list-item.absent {
+        border-left-color: #ee0979;
+    }
+
+    .list-item.retard {
+        border-left-color: #f39c12;
+    }
+
+    .list-item.permission {
+        border-left-color: #3498db;
+    }
+
+    .list-item.present {
+        border-left-color: #11998e;
+    }
+
+    .item-name {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .item-detail {
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #999;
+        padding: 20px;
+        font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+        .spa-header h1 {
+            font-size: 1.5em;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

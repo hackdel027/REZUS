@@ -1,0 +1,50 @@
+<div class="logs-wrapper">
+    <h2>Historique des actions</h2>
+
+    <table class="logs-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Action</th>
+                <th>Description</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="logs-container">
+            <!-- lignes auto-remplies -->
+        </tbody>
+    </table>
+</div>
+
+<style>
+.logs-wrapper {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+.logs-table th {
+    background: #1d4ed8;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.logs-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+.logs-table tr:nth-child(even) {
+    background: #f3f4f6;
+}
+
+</style>

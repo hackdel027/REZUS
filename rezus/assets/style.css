@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: relative;
+    width: 250px;
+    background-color: #1f2a44;
+    color: white;
+    padding: 20px 0;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 12px;
+  padding: 10px 0;
+}
+
+.logo-img {
+  width: 96px;              /* ajuster la taille si besoin */
+  height: 96px;
+  object-fit: cover;        /* crop propre si l'image n'est pas carrée */
+  border-radius: 50%;       /* rend l'image circulaire */
+  display: block;
+  margin: 0 auto;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 12px rgba(2,6,23,0.08);
+}
+
+.logo {
+  text-align: center;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+.menu-title {
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #273455;
+}
+
+.menu-title:hover {
+    background: #32406b;
+}
+
+.submenu {
+    display: none;
+    background: #2f3c59;
+}
+
+.submenu-item {
+    padding: 10px 35px;
+    cursor: pointer;
+}
+
+.submenu-item:hover {
+    background: #3c4b72;
+}
+
+/* MAIN CONTENT */
+.content {
+    flex: 1;
+    padding: 30px;
+}
+.sidebar-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 12px;
+}
+.btn-logout {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-logout:hover { opacity: 0.9; }
+
+.user-info {
+  padding: 12px;
+  border-bottom: 1px solid #e6e9ef;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.user-info strong {
+  color: #2b8aef;
+  font-weight: 600;
+}

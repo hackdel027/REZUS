@@ -1,0 +1,214 @@
+<div id="add-agent-view" class="agent-view" aria-hidden="false">
+  <section class="card">
+    <h1>Ajouter un agent</h1>
+
+    <form id="addAgentForm" action="POST" class="agent-form">
+      <div class="row">
+        <label for="email">Adresse email</label>
+        <input id="email" name="email" type="email" placeholder="ex: pierre@example.com" required>
+      </div>
+
+      <div class="row">
+        <label for="password">Mot de passe</label>
+        <input id="password" name="password" type="password" placeholder="••••••••" required>
+      </div>
+
+      <div class="row">
+        <label for="fullname">Nom et prénom</label>
+        <input id="fullname" name="fullname" type="text" placeholder="Nom Prénom" required>
+      </div>
+      <div class="row">
+        <label for="pseudo">Pseudo</label>
+        <input id="pseudo" name="pseudo" type="text" placeholder="Pseudo" required>
+      </div>
+      <div class="two-cols">
+        <div class="row">
+          <label for="age">Age</label>
+          <input id="age" name="age" type="number" min="16" placeholder="Âge" required>
+        </div>
+
+        <div class="row">
+          <label for="pole">Pôle</label>
+          <input id="pole" name="pole" type="text" placeholder="Ex: Production" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="residence">Lieu de résidence</label>
+        <input id="residence" name="residence" type="text" placeholder="Ville / Adresse" required>
+      </div>
+
+      <div class="row">
+        <label for="phone">Numéro de téléphone</label>
+        <input id="phone" name="phone" type="tel" placeholder="+33 6 12 34 56 78" required>
+      </div>
+      <div class="row">
+        <label for="role">Role de l'agent</label>
+        <input id="role" name="role" type="text" placeholder="Entre le role de l'agent (admin, gestionnaire, chef permanence, agent)" required>
+      </div>
+
+      <div class="actions">
+        <button id="ajoute_agent" class="btn-primary" type="submit">Ajouter un agent</button>
+      </div>
+    </form>
+  </section>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  // délégation pour fonctionner si le fragment est injecté dynamiquement
+  document.addEventListener('click', async (ev) => {
+    const btn = ev.target.closest('#ajoute_agent');
+    if (!btn) return;
+
+    ev.preventDefault();
+
+    const getVal = id => {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    };
+
+    const payload = {
+      nom: getVal('fullname') || getVal('nom'), // accepte les deux si besoin
+      email: getVal('email'),
+      password: getVal('password'),
+      pseudo: getVal('pseudo'),
+      age: parseInt(getVal('age'), 10) || 0,
+      pole: getVal('pole'),
+      lieu: getVal('residence'),
+      tel: getVal('phone'),
+      role: getVal('role') || 'agent'
+    };
+
+    // validation minimale
+    if (!payload.email || !payload.password || !payload.nom || !payload.pseudo) {
+      alert('Veuillez remplir les champs obligatoires');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('jwt'); // si route protégée
+      const res = await fetch('http://localhost:3000/api/addAgent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        alert('Agent ajouté avec succès');
+        const form = document.getElementById('addAgentForm');
+        if (form) form.reset();
+        // optionnel : charger la vue liste, etc.
+      } else {
+        alert(`Erreur : ${data.message || res.statusText}`);
+      }
+    } catch (err) {
+      console.error('Erreur addAgent:', err);
+      alert('Erreur de connexion au serveur');
+    }
+  });
+});
+</script>
+
+<style>
+    :root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --accent:#2b8aef;
+  --accent-2:#1f6fd6;
+  --muted:#6b7280;
+  --radius:12px;
+  --shadow: 0 6px 20px rgba(23,32,50,0.08);
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* uniquement pour la vue add-agent */
+.agent-view{ width:100%; max-width:920px; margin:0 auto; padding:18px; box-sizing:border-box; font-family:inherit; }
+
+.agent-view .card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px;
+  margin:12px 0;
+}
+
+/* Title */
+.agent-view .card h1{
+  margin:0 0 16px;
+  font-size:20px;
+  letter-spacing:0.2px;
+  color:#0f1724;
+}
+
+/* Form */
+.agent-view .agent-form .row{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:12px;
+}
+.agent-view .agent-form label{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.agent-view .agent-form input,
+.agent-view .agent-form select,
+.agent-view .agent-form textarea{
+  padding:10px 12px;
+  border:1px solid #e6e9ef;
+  border-radius:8px;
+  background:#fff;
+  font-size:14px;
+  outline:none;
+  transition:box-shadow .12s, border-color .12s;
+}
+.agent-view .agent-form input:focus{
+  border-color:var(--accent);
+  box-shadow:0 6px 18px rgba(43,138,239,0.08);
+}
+
+/* two columns row */
+.agent-view .two-cols{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+/* Actions */
+.agent-view .actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:16px;
+}
+.agent-view .btn-primary{
+  background: linear-gradient(180deg,var(--accent),var(--accent-2));
+  color:#fff;
+  border:none;
+  padding:10px 16px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 6px 14px rgba(27,99,204,0.14);
+}
+.agent-view .btn-primary:hover{opacity:0.95}
+
+/* Responsive */
+@media (max-width:640px){
+  .agent-view .two-cols{grid-template-columns:1fr}
+  .agent-view .actions{justify-content:center}
+}
+
+/* helper */
+.agent-view .small{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:8px;
+}
+/* ...existing code... */
+</style>

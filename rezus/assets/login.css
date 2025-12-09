@@ -1,0 +1,104 @@
+/* ===== PAGE DE LOGIN ===== */
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e9eef5;
+}
+
+.login-box {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 25px rgba(0,0,0,0.15);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.login-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #1f2a44;
+    font-weight: 700;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #d0d7e0;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.login-input:focus {
+    border-color: #3b6ff5;
+    box-shadow: 0 0 5px rgba(59, 111, 245, 0.4);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #1f2a44;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.login-btn:hover {
+    background: #32406b;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Texte et lien en bas */
+.signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.signup-link {
+    color: #1f2a44;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.popup-error {
+    display: none;
+    background: #ff4d4d;
+    color: white;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 14px;
+}
