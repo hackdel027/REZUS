@@ -1,6 +1,6 @@
 <div class="spa-container">
     <div class="spa-header">
-        <h1>Section de Présence et Absence (SPA)</h1>
+        <h1>CONSULTER LA SPA</h1>
         <div class="date-display" id="currentDate"></div>
     </div>
 
@@ -69,6 +69,29 @@
             <div class="list-container" id="presentsList">
                 <p class="empty-message">Aucune donnée</p>
             </div>
+        </div>
+    </div>
+
+    <div class="spa-list-section">
+        <div class="spa-cards-grid">
+            <!-- Exemple de carte SPA -->
+            <div class="spa-card">
+                <div class="spa-card-header">
+                    <div class="spa-card-date">12 Octobre 2023</div>
+                </div>
+                <div class="spa-card-stats">
+                    <div class="spa-card-stat">
+                        <div class="stat-label">Présents</div>
+                        <div class="stat-value present-color">25</div>
+                    </div>
+                    <div class="spa-card-stat">
+                        <div class="stat-label">Absents</div>
+                        <div class="stat-value absent-color">5</div>
+                    </div>
+                </div>
+                <button class="view-detail-btn">Voir les détails</button>
+            </div>
+            <!-- Fin de l'exemple -->
         </div>
     </div>
 </div>
@@ -253,6 +276,123 @@
         font-style: italic;
     }
 
+    .spa-list-section {
+        padding: 20px;
+    }
+
+    .spa-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .spa-card {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-left: 4px solid #667eea;
+    }
+
+    .spa-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .spa-card-header {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .spa-card-date {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .spa-card-stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+    }
+
+    .spa-card-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .stat-label {
+        font-size: 0.85em;
+        color: #666;
+    }
+
+    .stat-value {
+        font-size: 1.8em;
+        font-weight: bold;
+    }
+
+    .total-color {
+        color: #667eea;
+    }
+
+    .present-color {
+        color: #11998e;
+    }
+
+    .absent-color {
+        color: #ee0979;
+    }
+
+    .view-detail-btn {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: opacity 0.3s;
+    }
+
+    .view-detail-btn:hover {
+        opacity: 0.9;
+    }
+
+    .back-btn {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: all 0.3s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .error-message {
+        background: #fff5f5;
+        border: 2px solid #ee0979;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px;
+    }
+
     @media (max-width: 768px) {
         .spa-header h1 {
             font-size: 1.5em;
@@ -260,6 +400,15 @@
 
         .stats-grid {
             grid-template-columns: 1fr;
+        }
+        
+        .spa-cards-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .back-btn {
+            position: static;
+            margin-bottom: 15px;
         }
     }
 </style>
