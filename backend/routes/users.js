@@ -244,7 +244,7 @@ router.put('/users/:id', verifyToken, authorizeRole("admin"), async function(req
  *       200:
  *         description: Profil mis à jour avec succès.
  */
-router.put('/users/profile', verifyToken, async function(req, res, next) {
+router.put('/profile', verifyToken, async function(req, res, next) {
   try {
     const { nom, lieu, email, tel, pseudo, age } = req.body;
     const updatedUser = await User.findByIdAndUpdate(

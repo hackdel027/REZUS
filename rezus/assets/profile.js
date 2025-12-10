@@ -160,7 +160,8 @@ function formatDate(dateString) {
 }
 
 function editProfile() {
-    console.log('editProfile appelé');
+    console.log('=== editProfile appelé ===');
+    console.trace(); // Affiche la trace d'appel
     
     if (!window.currentUser) {
         alert('Erreur: données utilisateur non disponibles');
@@ -269,7 +270,7 @@ async function handleEditSubmit(e) {
         saveBtn.innerHTML = '⏳ Enregistrement...';
         saveBtn.disabled = true;
         
-        const response = await fetch('http://192.168.1.27:3000/api/users/profile', {
+        const response = await fetch('http://192.168.1.27:3000/api/profile', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -345,7 +346,7 @@ function displayError(message) {
         console.error('Container profile-container non trouvé');
         return;
     }
-    
+
     container.innerHTML = `
         <div class="profile-header">
             <h1>Mon Profil</h1>
