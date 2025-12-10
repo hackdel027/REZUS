@@ -62,8 +62,6 @@ async function loadUserProfile() {
         console.log('data complète:', data);
         console.log('data.user:', data.user);
         
-        // L'API retourne { message: '...', user: {...} }
-        // On passe uniquement data.user à displayUserProfile
         if (data.user) {
             displayUserProfile(data.user);
         } else {
@@ -84,6 +82,9 @@ async function loadUserProfile() {
 function displayUserProfile(user) {
     console.log('=== DEBUT displayUserProfile ===');
     console.log('User object:', user);
+    
+    // Stocker les données utilisateur pour la modification
+    window.currentUser = user;
     
     // Mettre à jour l'avatar avec les initiales
     const avatarEl = document.getElementById('avatarInitials');
@@ -159,14 +160,180 @@ function formatDate(dateString) {
 }
 
 function editProfile() {
-    alert('Fonctionnalité de modification en cours de développement');
-    // TODO: Implémenter le formulaire de modification
+    console.log('editProfile appelé');
+    
+    if (!window.currentUser) {
+        alert('Erreur: données utilisateur non disponibles');
+        return;
+    }
+    
+    const user = window.currentUser;
+    
+    // Créer le modal
+    const modalHTML = `
+        <div class="edit-modal-overlay" id="editModalOverlay">
+            <div class="edit-modal">
+                <div class="edit-modal-header">
+                    <h2>✏️ Modifier mon profil</h2>
+                    <button class="close-modal-btn" onclick="closeEditModal()">✕</button>
+                </div>
+                <div class="edit-modal-body">
+                    <form id="editProfileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editNom">Nom complet *</label>
+                                <input type="text" id="editNom" name="nom" value="${user.nom || ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPseudo">Pseudo *</label>
+                                <input type="text" id="editPseudo" name="pseudo" value="${user.pseudo || ''}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editEmail">Email *</label>
+                                <input type="email" id="editEmail" name="email" value="${user.email || ''}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTel">Téléphone</label>
+                                <input type="tel" id="editTel" name="tel" value="${user.tel || ''}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editAge">Âge</label>
+                                <input type="text" id="editAge" name="age" value="${user.age || ''}">
+                            </div>
+                            <div class="form-group">
+                                <label for="editLieu">Lieu</label>
+                                <input type="text" id="editLieu" name="lieu" value="${user.lieu || ''}">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-cancel" onclick="closeEditModal()">Annuler</button>
+                            <button type="submit" class="btn btn-save">💾 Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Ajouter le modal au DOM
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Ajouter l'écouteur d'événement au formulaire
+    document.getElementById('editProfileForm').addEventListener('submit', handleEditSubmit);
+    
+    // Empêcher le scroll du body
+    document.body.style.overflow = 'hidden';
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editModalOverlay');
+    if (modal) {
+        modal.remove();
+    }
+    // Réactiver le scroll du body
+    document.body.style.overflow = '';
+}
+
+async function handleEditSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const formData = {
+        nom: form.nom.value.trim(),
+        pseudo: form.pseudo.value.trim(),
+        email: form.email.value.trim(),
+        tel: form.tel.value.trim(),
+        age: form.age.value.trim(),
+        lieu: form.lieu.value.trim()
+    };
+    
+    console.log('Données à envoyer:', formData);
+    
+    try {
+        const token = getAuthToken();
+        
+        if (!token) {
+            throw new Error('Token non trouvé');
+        }
+        
+        // Afficher un loader dans le modal
+        const saveBtn = form.querySelector('.btn-save');
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '⏳ Enregistrement...';
+        saveBtn.disabled = true;
+        
+        const response = await fetch('http://192.168.1.27:3000/api/users/profile', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.message || 'Erreur lors de la mise à jour');
+        }
+        
+        console.log('Profil mis à jour avec succès:', data);
+        
+        // Fermer le modal
+        closeEditModal();
+        
+        // Afficher un message de succès
+        showSuccessMessage('✅ Profil mis à jour avec succès !');
+        
+        // Recharger le profil
+        await loadUserProfile();
+        
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour:', error);
+        alert('Erreur: ' + error.message);
+        
+        // Restaurer le bouton
+        const saveBtn = form.querySelector('.btn-save');
+        saveBtn.innerHTML = '💾 Enregistrer';
+        saveBtn.disabled = false;
+    }
+}
+
+function showSuccessMessage(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'success-toast';
+    successDiv.textContent = message;
+    successDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+        successDiv.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => successDiv.remove(), 300);
+    }, 3000);
 }
 
 function logout() {
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
         localStorage.removeItem('jwt');
-        localStorage.removeItem('token');
         window.location.href = './pages/login.html';
     }
 }
@@ -193,6 +360,7 @@ function displayError(message) {
 // Rendre les fonctions globales
 window.initProfile = initProfile;
 window.editProfile = editProfile;
+window.closeEditModal = closeEditModal;
 window.logout = logout;
 
 console.log('✅ Script profile.js chargé et prêt');

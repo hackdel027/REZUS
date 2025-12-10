@@ -33,10 +33,18 @@
         <td>${escapeHtml(u.nom || '')}</td>
         <td>${escapeHtml(u.email || '—')}</td>
         <td>${escapeHtml(u.role || '—')}</td>
-        <td style="text-align:right">
-          <button class="action-btn btn-view" data-action="view">Voire</button>
-          <button class="action-btn btn-edit" data-action="edit">Modifier</button>
-          <button class="action-btn btn-delete" data-action="delete">Suppr</button>
+        <td>
+          <div style="display: flex; gap: 4px; justify-content: flex-end; flex-wrap: nowrap;">
+            <button class="action-btn btn-view" data-action="view" title="Voir les détails">
+              <span style="font-size: 16px;">👁️</span>
+            </button>
+            <button class="action-btn btn-edit" data-action="edit" title="Modifier">
+              <span style="font-size: 16px;">✏️</span>
+            </button>
+            <button class="action-btn btn-delete" data-action="delete" title="Supprimer">
+              <span style="font-size: 16px;">🗑️</span>
+            </button>
+          </div>
         </td>
       </tr>
     `).join('');

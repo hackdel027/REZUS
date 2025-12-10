@@ -212,7 +212,56 @@ router.put('/users/:id', verifyToken, authorizeRole("admin"), async function(req
   }
 }
 );
-
+// PUT update profile user info with token
+/**
+ * @swagger
+ * /api/users/profile:
+ *   put:
+ *     summary: Mettre à jour le profil de l'utilisateur connecté
+ *     description: Met à jour les informations du profil de l'utilisateur connecté en utilisant le token JWT.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: body
+ *         name: profile
+ *         description: Les nouvelles informations du profil de l'utilisateur.
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             nom:
+ *               type: string
+ *             lieu:
+ *               type: string
+ *             email:
+ *               type: string
+ *             tel:
+ *               type: string
+ *             pseudo:
+ *               type: string
+ *             age:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: Profil mis à jour avec succès.
+ */
+router.put('/users/profile', verifyToken, async function(req, res, next) {
+  try {
+    const { nom, lieu, email, tel, pseudo, age } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { nom, lieu, email, tel, pseudo, age } ,
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+    await logAction(req, "UPDATE_PROFILE", "Mise à jour du profil utilisateur");
+    res.status(200).json({ message: 'Profil mis à jour avec succès', fiche: updatedUser });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur lors de la mise à jour du profil', error: err.message });
+  }
+}
+);
 // /* UPDATE user password by ID. */
 /**
  * @swagger
