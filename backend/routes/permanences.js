@@ -209,7 +209,7 @@ router.get('/getregisteredPermanenceById/:id', verifyToken, authorizeRole("chefp
 *       500:
 *         description: Erreur lors de la planification de la permanence.
 */
-router.post('/createPermanence', verifyToken, authorizeRole("gestionnaire"), async (req, res) => {
+router.post('/createPermanence', verifyToken, authorizeRole("admin"), async (req, res) => {
   try {
     const semaine = req.body;
     const nouvellePermanence = new Planpermanence({

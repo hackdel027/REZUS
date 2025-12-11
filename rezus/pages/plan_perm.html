@@ -1,40 +1,84 @@
-<h1>PLANIFIER UNE PERMANENCE.</h1>
+<h1>📅 Planification de la Permanence</h1>
+<p>Organisez la permanence de la semaine</p>
 
-<!-- Fragment : Planifier la permanence de la semaine -->
-<div id="create-permanence-view" class="create-permanence-view">
-  <section class="card">
-    <div class="header">
-      <h1>Planifier la permanence (semaine)</h1>
-      <div id="weekLabel" class="week-label"></div>
-    </div>
+<!-- Section coordinateur -->
+<div class="coordinator-section card">
+  <h2 class="section-title">
+    <span class="icon">👨‍💼</span> Coordinateur de la semaine
+  </h2>
+  <select id="coordinatorSelect" class="coordinator-select">
+    <option value="">— Sélectionner un coordinateur —</option>
+  </select>
+</div>
 
-    <div class="controls">
-      <label>Choisir le lundi de la semaine
-        <input id="weekStart" type="date">
-      </label>
-      <button id="btnGenerate" class="btn-primary" type="button">Générer la semaine</button>
-    </div>
+<!-- Sélection de la semaine -->
+<div class="week-selector card">
+  <div class="week-input-group">
+    <label for="weekStart">
+      <span class="icon">📆</span> Semaine du (Lundi) :
+    </label>
+    <input type="date" id="weekStart" />
+    <button id="btnGenerate" class="btn btn-generate">Générer</button>
+  </div>
+  <div id="weekLabel" class="week-label"></div>
+</div>
 
-    <form id="permanenceForm" class="permanence-form" onsubmit="return false;">
-      <div id="daysGrid" class="days-grid">
-        <!-- cases jours générées dynamiquement -->
-      </div>
+<!-- Grille des jours -->
+<div class="days-section">
+  <h2 class="section-title">
+    <span class="icon">📋</span> Équipes par jour (3 agents par jour)
+  </h2>
+  <div id="daysGrid" class="days-grid">
+    <!-- Cards générées dynamiquement -->
+  </div>
+</div>
 
-      <div class="actions">
-        <button id="btnPreview" class="btn-secondary" type="button">Aperçu</button>
-        <button id="btnSave" class="btn-primary" type="button">Enregistrer</button>
-      </div>
-    </form>
-
-    <div id="preview" class="preview" aria-hidden="true"></div>
-  </section>
+<!-- Aperçu et actions -->
+<div class="bottom-section">
+  <div class="preview-card card" id="preview">
+    <h3>Aperçu</h3>
+    <p style="opacity:0.6">Sélectionnez un coordinateur et des agents...</p>
+  </div>
+  
+  <div class="actions-card">
+    <button id="btnPreview" class="btn btn-secondary">👁️ Aperçu</button>
+    <button id="btnSave" class="btn btn-save">💾 Enregistrer</button>
+  </div>
 </div>
 
 <style>
 :root{
   --card:#fff; --bg:#f4f7fb; --accent:#2b8aef; --muted:#6b7280; --radius:12px;
 }
-.create-permanence-view{max-width:1100px;margin:18px auto;font-family:Inter,Arial;padding:0 12px;}
+.plan-perm-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 100px;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.page-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2em;
+}
+
+.page-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1.1em;
+}
+
 .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(23,32,50,0.06);}
 .header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
 .header h1{font-size:20px;margin:0;}
@@ -50,5 +94,289 @@ select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #
 .btn-secondary{background:#eef2f7;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;}
 .preview{margin-top:16px;padding:12px;border-radius:8px;background:#fbfbff;border:1px solid #eef2f7;}
 .preview h3{margin:0 0 8px;font-size:14px;}
-@media (max-width:900px){ .days-grid{grid-template-columns:repeat(2,1fr);} }
+.page-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.page-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2em;
+}
+
+.page-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 1.1em;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom: 20px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 15px 0;
+  font-size: 1.3em;
+  color: #333;
+}
+
+.section-title .icon {
+  font-size: 1.2em;
+}
+
+/* Coordinateur */
+.coordinator-section {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.coordinator-section .section-title {
+  color: white;
+}
+
+.coordinator-select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  font-size: 1em;
+  background: rgba(255,255,255,0.9);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.coordinator-select:focus {
+  outline: none;
+  border-color: white;
+  background: white;
+}
+
+/* Week selector */
+.week-selector {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.week-input-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.week-input-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+#weekStart {
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  background: white;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-generate {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.week-label {
+  margin-top: 15px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  color: #667eea;
+}
+
+/* Days grid */
+.days-section {
+  margin-bottom: 30px;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.day-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+  border-left: 4px solid #667eea;
+}
+
+.day-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.day-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.day-date {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.agents-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.agent-selects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-select {
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  background: white;
+}
+
+.agent-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.agent-select:nth-child(1) { border-left-color: #667eea; }
+.agent-select:nth-child(2) { border-left-color: #f093fb; }
+.agent-select:nth-child(3) { border-left-color: #38ef7d; }
+
+/* Bottom section */
+.bottom-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.preview-card {
+  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+
+.preview-card h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.preview-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.preview-card li {
+  padding: 8px 12px;
+  margin: 5px 0;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+
+.preview-card .day-group {
+  margin-bottom: 15px;
+}
+
+.preview-card .day-group-title {
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.actions-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-secondary {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #d0d0d0;
+  transform: translateY(-2px);
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.btn-save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+}
+
+@media (max-width: 768px) {
+  .bottom-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .week-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 </style>
