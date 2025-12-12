@@ -42,6 +42,7 @@ const permanenceSchema = new mongoose.Schema({
     default: ""
   },
 });
+
 const planPermanenceSchema = new mongoose.Schema({
   semaine: {
     coordinateur: {
@@ -50,17 +51,25 @@ const planPermanenceSchema = new mongoose.Schema({
       required: true
     },
     jours: [{
-      nom: { type: String }, // Lundi, Mardi, etc.
-      date: { type: Date },
-      agents: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-      }],
-      validate: {
-        validator: function() {
-          return this.agents.length === 3;
-        },
-        message: 'Il doit y avoir exactement 3 agents par jour'
+      nom: { 
+        type: String,
+        required: true
+      },
+      date: { 
+        type: Date,
+        required: true
+      },
+      agents: {
+        type: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User'
+        }],
+        validate: {
+          validator: function(v) {
+            return Array.isArray(v) && v.length === 3;
+          },
+          message: 'Il doit y avoir exactement 3 agents par jour'
+        }
       }
     }]
   },

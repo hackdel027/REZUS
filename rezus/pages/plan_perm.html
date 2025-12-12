@@ -1,48 +1,52 @@
-<h1>📅 Planification de la Permanence</h1>
-<p>Organisez la permanence de la semaine</p>
-
-<!-- Section coordinateur -->
-<div class="coordinator-section card">
-  <h2 class="section-title">
-    <span class="icon">👨‍💼</span> Coordinateur de la semaine
-  </h2>
-  <select id="coordinatorSelect" class="coordinator-select">
-    <option value="">— Sélectionner un coordinateur —</option>
-  </select>
-</div>
-
-<!-- Sélection de la semaine -->
-<div class="week-selector card">
-  <div class="week-input-group">
-    <label for="weekStart">
-      <span class="icon">📆</span> Semaine du (Lundi) :
-    </label>
-    <input type="date" id="weekStart" />
-    <button id="btnGenerate" class="btn btn-generate">Générer</button>
+<div class="plan-perm-container">
+  <div class="page-header">
+    <h1>📅 Planification de la Permanence</h1>
+    <p>Organisez la permanence de la semaine</p>
   </div>
-  <div id="weekLabel" class="week-label"></div>
-</div>
 
-<!-- Grille des jours -->
-<div class="days-section">
-  <h2 class="section-title">
-    <span class="icon">📋</span> Équipes par jour (3 agents par jour)
-  </h2>
-  <div id="daysGrid" class="days-grid">
-    <!-- Cards générées dynamiquement -->
+  <!-- Section coordinateur -->
+  <div class="coordinator-section card">
+    <h2 class="section-title">
+      <span class="icon">👨‍💼</span> Coordinateur de la semaine
+    </h2>
+    <select id="coordinatorSelect" class="coordinator-select">
+      <option value="">— Sélectionner un coordinateur —</option>
+    </select>
   </div>
-</div>
 
-<!-- Aperçu et actions -->
-<div class="bottom-section">
-  <div class="preview-card card" id="preview">
-    <h3>Aperçu</h3>
-    <p style="opacity:0.6">Sélectionnez un coordinateur et des agents...</p>
+  <!-- Sélection de la semaine -->
+  <div class="week-selector card">
+    <div class="week-input-group">
+      <label for="weekStart">
+        <span class="icon">📆</span> Semaine du (Lundi) :
+      </label>
+      <input type="date" id="weekStart" />
+      <button id="btnGenerate" class="btn btn-generate">Générer</button>
+    </div>
+    <div id="weekLabel" class="week-label"></div>
   </div>
-  
-  <div class="actions-card">
-    <button id="btnPreview" class="btn btn-secondary">👁️ Aperçu</button>
-    <button id="btnSave" class="btn btn-save">💾 Enregistrer</button>
+
+  <!-- Grille des jours -->
+  <div class="days-section">
+    <h2 class="section-title">
+      <span class="icon">📋</span> Équipes par jour (3 agents par jour)
+    </h2>
+    <div id="daysGrid" class="days-grid">
+      <!-- Cards générées dynamiquement -->
+    </div>
+  </div>
+
+  <!-- Aperçu et actions -->
+  <div class="bottom-section">
+    <div class="preview-card card" id="preview">
+      <h3>📋 Aperçu de la planification</h3>
+      <p style="opacity:0.6">Sélectionnez un coordinateur et des agents...</p>
+    </div>
+    
+    <div class="actions-card">
+      <button id="btnPreview" class="btn btn-secondary">👁️ Aperçu</button>
+      <button id="btnSave" class="btn btn-save">💾 Enregistrer</button>
+    </div>
   </div>
 </div>
 
@@ -58,42 +62,6 @@
   font-family: 'Inter', Arial, sans-serif;
 }
 
-.page-header {
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 30px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-
-.page-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 2em;
-}
-
-.page-header p {
-  margin: 0;
-  opacity: 0.9;
-  font-size: 1.1em;
-}
-
-.card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 6px 20px rgba(23,32,50,0.06);}
-.header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
-.header h1{font-size:20px;margin:0;}
-.controls{display:flex;gap:12px;align-items:center;margin-bottom:14px;}
-.controls input[type="date"]{padding:8px;border:1px solid #e6e9ef;border-radius:8px;}
-.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin:12px 0;}
-.day-card{background:#f8fafc;border-radius:10px;padding:12px;border:1px solid #eef2f7;display:flex;flex-direction:column;gap:8px;min-height:120px;}
-.day-title{font-weight:700;font-size:13px;color:#0f1724;}
-.day-date{font-size:12px;color:var(--muted);}
-select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef;background:#fff;}
-.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;}
-.btn-primary{background:linear-gradient(180deg,var(--accent),#1f6fd6);color:#fff;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;}
-.btn-secondary{background:#eef2f7;padding:10px 14px;border-radius:10px;border:none;cursor:pointer;}
-.preview{margin-top:16px;padding:12px;border-radius:8px;background:#fbfbff;border:1px solid #eef2f7;}
-.preview h3{margin:0 0 8px;font-size:14px;}
 .page-header {
   text-align: center;
   margin-bottom: 30px;
@@ -231,7 +199,7 @@ select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #
 
 .days-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 20px;
   margin-top: 15px;
 }
@@ -282,21 +250,35 @@ select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #
 .agent-select {
   padding: 10px;
   border: 2px solid #e0e0e0;
+  border-left-width: 4px;
   border-radius: 6px;
   font-size: 0.95em;
   cursor: pointer;
-  transition: border-color 0.3s;
+  transition: all 0.3s;
   background: white;
 }
 
 .agent-select:focus {
   outline: none;
   border-color: #667eea;
+  background: #f8f9ff;
 }
 
-.agent-select:nth-child(1) { border-left-color: #667eea; }
-.agent-select:nth-child(2) { border-left-color: #f093fb; }
-.agent-select:nth-child(3) { border-left-color: #38ef7d; }
+.agent-select:nth-child(1) { 
+  border-left-color: #667eea; 
+}
+
+.agent-select:nth-child(2) { 
+  border-left-color: #f093fb; 
+}
+
+.agent-select:nth-child(3) { 
+  border-left-color: #38ef7d; 
+}
+
+.agent-select option {
+  padding: 8px;
+}
 
 /* Bottom section */
 .bottom-section {
@@ -307,36 +289,61 @@ select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #
 
 .preview-card {
   background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  padding: 25px;
 }
 
 .preview-card h3 {
   margin: 0 0 15px 0;
   color: #333;
+  font-size: 1.3em;
 }
 
-.preview-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.preview-card li {
-  padding: 8px 12px;
-  margin: 5px 0;
+.preview-content {
   background: white;
-  border-radius: 6px;
-  font-size: 0.95em;
+  padding: 15px;
+  border-radius: 8px;
 }
 
-.preview-card .day-group {
+.preview-coordinator {
+  margin-bottom: 20px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.day-group {
   margin-bottom: 15px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
 }
 
-.preview-card .day-group-title {
+.day-group-title {
   font-weight: 700;
   color: #667eea;
   margin-bottom: 8px;
   display: block;
+  font-size: 1.1em;
+}
+
+.agent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.agent-list li {
+  padding: 8px 12px;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.9em;
+  border-left: 3px solid #38ef7d;
 }
 
 .actions-card {
@@ -363,6 +370,12 @@ select.person-select{width:100%;padding:8px;border-radius:8px;border:1px solid #
 .btn-save:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
 @media (max-width: 768px) {

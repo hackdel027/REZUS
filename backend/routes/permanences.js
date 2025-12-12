@@ -211,14 +211,83 @@ router.get('/getregisteredPermanenceById/:id', verifyToken, authorizeRole("chefp
 */
 router.post('/createPermanence', verifyToken, authorizeRole("admin"), async (req, res) => {
   try {
-    const semaine = req.body;
+    console.log('=== CREATE PERMANENCE ===');
+    console.log('Body complet:', JSON.stringify(req.body, null, 2));
+    console.log('User:', req.user);
+    
+    const { semaine } = req.body;
+    
+    if (!semaine) {
+      console.error('❌ Semaine manquante');
+      return res.status(400).json({ message: 'Données semaine manquantes' });
+    }
+    
+    console.log('Coordinateur:', semaine.coordinateur);
+    console.log('Jours:', semaine.jours);
+    
+    if (!semaine.coordinateur) {
+      console.error('❌ Coordinateur manquant');
+      return res.status(400).json({ message: 'Coordinateur manquant' });
+    }
+    
+    if (!semaine.jours || !Array.isArray(semaine.jours) || semaine.jours.length === 0) {
+      console.error('❌ Jours invalides');
+      return res.status(400).json({ message: 'Jours manquants ou invalides' });
+    }
+    
+    // Vérifier que chaque jour a exactement 3 agents
+    for (let i = 0; i < semaine.jours.length; i++) {
+      const jour = semaine.jours[i];
+      console.log(`Jour ${i}:`, jour);
+      
+      if (!jour.agents || !Array.isArray(jour.agents)) {
+        console.error(`❌ Jour ${jour.nom}: agents manquants ou invalides`);
+        return res.status(400).json({ 
+          message: `Le jour ${jour.nom} doit avoir un tableau d'agents` 
+        });
+      }
+      
+      if (jour.agents.length !== 3) {
+        console.error(`❌ Jour ${jour.nom}: ${jour.agents.length} agents au lieu de 3`);
+        return res.status(400).json({ 
+          message: `Le jour ${jour.nom} doit avoir exactement 3 agents (actuellement: ${jour.agents.length})` 
+        });
+      }
+    }
+    
+    console.log('✅ Validation OK, création de l\'objet Planpermanence...');
+    
     const nouvellePermanence = new Planpermanence({
-    semaine,
+      semaine: {
+        coordinateur: semaine.coordinateur,
+        jours: semaine.jours
+      }
     });
+    
+    console.log('Objet créé:', nouvellePermanence);
+    
     await nouvellePermanence.save();
-    res.status(201).json({ message: 'Permanence planifiée avec succès', permanence: nouvellePermanence });
+    
+    console.log('✅ Permanence sauvegardée avec succès');
+    
+    res.status(201).json({ 
+      message: 'Permanence planifiée avec succès', 
+      permanence: nouvellePermanence 
+    });
   } catch (err) {
-    res.status(500).json({ message: "Erreur lors de la planification de la permanence", error: err.message });
+    console.error('❌ ERREUR createPermanence:');
+    console.error('Message:', err.message);
+    console.error('Stack:', err.stack);
+    console.error('Name:', err.name);
+    
+    res.status(500).json({ 
+      message: "Erreur lors de la planification de la permanence", 
+      error: err.message,
+      details: err.errors ? Object.keys(err.errors).map(key => ({
+        field: key,
+        message: err.errors[key].message
+      })) : undefined
+    });
   }
 });
 
